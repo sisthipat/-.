@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <div class="container mx-auto px-4 py-8">
+    <!-- Game Start Screen -->
+    <div id="startScreen" class="text-center">
+        <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 max-w-2xl mx-auto border border-white/20">
+            <div class="text-8xl mb-6 pulse-animation">🎯</div>
+            <h2 class="text-4xl font-bold text-white mb-4">ปกป้องอนาคต</h2>
+            <p class="text-xl text-white/80 mb-8">เกมความรู้เพื่อต่อต้านยาเสพติดและสร้างสังคมที่ดีกว่า</p>
+            
+            <!-- Player Name Input -->
+            <div class="mb-8">
+                <div class="bg-white/5 rounded-2xl p-6 border border-white/20">
+                    <div class="text-white font-medium mb-3">👤 กรอกชื่อ-นามสกุลของคุณ</div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="text" id="playerFirstName" placeholder="ชื่อ..." 
+                               class="bg-white/10 border border-white/30 rounded-xl px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:border-blue-400 focus:bg-white/20 transition-all duration-300"
+                               maxlength="15">
+                        <input type="text" id="playerLastName" placeholder="นามสกุล..." 
+                               class="bg-white/10 border border-white/30 rounded-xl px-4 py-3 text-white placeholder-white/50 focus:outline-none focus:border-blue-400 focus:bg-white/20 transition-all duration-300"
+                               maxlength="15">
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-green-500/20 rounded-xl p-4 border border-green-400/30">
+                    <div class="text-3xl mb-2">📚</div>
+                    <div class="text-white font-medium">เรียนรู้</div>
+                    <div class="text-white/70 text-sm">ความรู้เกี่ยวกับยาเสพติด</div>
+                </div>
+                <div class="bg-blue-500/20 rounded-xl p-4 border border-blue-400/30">
+                    <div class="text-3xl mb-2">🧠</div>
+                    <div class="text-white font-medium">ทดสอบ</div>
+                    <div class="text-white/70 text-sm">ความเข้าใจและการป้องกัน</div>
+                </div>
+                <div class="bg-purple-500/20 rounded-xl p-4 border border-purple-400/30">
+                    <div class="text-3xl mb-2">🏆</div>
+                    <div class="text-white font-medium">ชนะ</div>
+                    <div class="text-white/70 text-sm">สร้างสังคมที่ดีกว่า</div>
+                </div>
+            </div>
+
+            <!-- Bonus System Info -->
+            <div class="bg-orange-500/10 rounded-2xl p-4 mb-8 border border-orange-400/20">
+                <div class="text-center">
+                    <div class="text-2xl mb-2">⚡ ระบบโบนัสความเร็ว</div>
+                    <div class="text-white/80 text-sm mb-3">ตอบเร็วได้โบนัสเพิ่ม!</div>
+                    <div class="grid grid-cols-3 gap-2 text-xs">
+                        <div class="bg-white/10 rounded-lg p-2">
+                            <div class="text-lg">🚀</div>
+                            <div class="text-white">≤5 วิ</div>
+                            <div class="text-orange-400">+5 แต้ม</div>
+                        </div>
+                        <div class="bg-white/10 rounded-lg p-2">
+                            <div class="text-lg">⚡</div>
+                            <div class="text-white">≤10 วิ</div>
+                            <div class="text-orange-400">+3 แต้ม</div>
+                        </div>
+                        <div class="bg-white/10 rounded-lg p-2">
+                            <div class="text-lg">💨</div>
+                            <div class="text-white">≤15 วิ</div>
+                            <div class="text-orange-400">+1 แต้ม</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <button onclick="startGame()" class="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-4 px-8 rounded-full text-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    🚀 เริ่มเกม
+                </button>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button onclick="showLeaderboard()" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105">
+                        🏆 อันดับคะแนน
+                    </button>
+                    <button onclick="showStats()" class="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105">
+                        📊 สถิติรวม
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboard Screen -->
+    <div id="leaderboardScreen" class="hidden text-center">
+        <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 max-w-2xl mx-auto border border-white/20">
+            <div class="text-6xl mb-6">🏆</div>
+            <h2 class="text-3xl font-bold text-white mb-6">อันดับคะแนนสูงสุด</h2>
+            
+            <div id="leaderboardList" class="space-y-3 mb-8">
+                <!-- Leaderboard entries will be populated here -->
+            </div>
+
+            <button onclick="backToStart()" class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105">
+                ← กลับหน้าหลัก
+            </button>
+        </div>
+    </div>
+
+    <!-- Stats Screen -->
+    <div id="statsScreen" class="hidden text-center">
+        <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 max-w-4xl mx-auto border border-white/20">
+            <div class="text-6xl mb-6">📊</div>
+            <h2 class="text-3xl font-bold text-white mb-6">สถิติรวมทั้งหมด</h2>
+            
+            <!-- Overall Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl p-6 border border-blue-400/30">
+                    <div class="text-4xl mb-2">👥</div>
+                    <div class="text-3xl font-bold text-white mb-1" id="totalPlayers">0</div>
+                    <div class="text-white/70">ผู้เล่นทั้งหมด</div>
+                </div>
+                <div class="bg-gradient-to-br from-green-500/20 to-blue-500/20 rounded-2xl p-6 border border-green-400/30">
+                    <div class="text-4xl mb-2">🎮</div>
+                    <div class="text-3xl font-bold text-white mb-1" id="totalGames">0</div>
+                    <div class="text-white/70">เกมที่เล่น</div>
+                </div>
+                <div class="bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-2xl p-6 border border-orange-400/30">
+                    <div class="text-4xl mb-2">⏱️</div>
+                    <div class="text-3xl font-bold text-white mb-1" id="avgTime">0</div>
+                    <div class="text-white/70">เวลาเฉลี่ย (นาที)</div>
+                </div>
+            </div>
+
+            <!-- Recent Games -->
+            <div class="bg-white/5 rounded-2xl p-6 mb-8 border border-white/20">
+                <h3 class="text-xl font-bold text-white mb-4">🕒 เกมล่าสุด</h3>
+                <div id="recentGamesList" class="space-y-3">
+                    <!-- Recent games will be populated here -->
+                </div>
+            </div>
+
+            <button onclick="backToStart()" class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105">
+                ← กลับหน้าหลัก
+            </button>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="gameScreen" class="hidden">
+        <!-- Progress Bar -->
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 mb-6 border border-white/20">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-white font-medium">ความคืบหน้า</span>
+                <span class="text-white" id="questionCounter">1/10</span>
+            </div>
+            <div class="bg-white/20 rounded-full h-3">
+                <div id="progressBar" class="bg-gradient-to-r from-green-400 to-blue-500 h-3 rounded-full transition-all duration-500" style="width: 10%"></div>
+            </div>
+        </div>
+
+        <!-- Score Display -->
+        <div class="flex justify-center mb-6">
+            <div class="bg-white/10 backdrop-blur-md rounded-2xl px-6 py-3 border border-white/20">
+                <div class="flex items-center space-x-4">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-green-400" id="score">0</div>
+                        <div class="text-white/70 text-sm">คะแนน</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-blue-400" id="streak">0</div>
+                        <div class="text-white/70 text-sm">ต่อเนื่อง</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-orange-400" id="timer">30</div>
+                        <div class="text-white/70 text-sm">วินาที</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question Card -->
+        <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 max-w-4xl mx-auto border border-white/20 slide-in">
+            <div class="text-center mb-6">
+                <div class="text-6xl mb-4" id="questionEmoji">❓</div>
+                <h3 class="text-2xl font-bold text-white mb-4" id="questionText">กำลังโหลดคำถาม...</h3>
+            </div>
+
+            <!-- Answer Options -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="answerOptions">
+                <!-- Options will be populated by JavaScript -->
+            </div>
+
+            <!-- Feedback -->
+            <div id="feedback" class="hidden mt-6 p-4 rounded-2xl text-center">
+                <div class="text-2xl mb-2" id="feedbackEmoji"></div>
+                <div class="font-bold text-lg mb-2" id="feedbackTitle"></div>
+                <div class="text-sm" id="feedbackText"></div>
+            </div>
+
+            <!-- Next Button -->
+            <div class="text-center mt-6">
+                <button id="nextButton" onclick="nextQuestion()" class="hidden bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105">
+                    คำถามถัดไป →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="resultsScreen" class="hidden text-center">
+        <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 max-w-2xl mx-auto border border-white/20">
+            <div class="text-8xl mb-6" id="resultEmoji">🎉</div>
+            <h2 class="text-4xl font-bold text-white mb-4" id="resultTitle">ยินดีด้วย!</h2>
+            <div class="text-xl text-white/80 mb-6" id="resultMessage">คุณได้คะแนน</div>
+            
+            <!-- Final Score -->
+            <div class="bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-2xl p-6 mb-6 border border-white/30">
+                <div class="text-5xl font-bold text-white mb-2" id="finalScore">0/10</div>
+                <div class="text-white/70">คะแนนรวม</div>
+            </div>
+
+            <!-- Achievement -->
+            <div class="mb-6" id="achievement">
+                <div class="text-4xl mb-2" id="achievementEmoji">🏆</div>
+                <div class="text-lg font-bold text-white" id="achievementTitle">นักสู้ต่อต้านยาเสพติด</div>
+                <div class="text-white/70 text-sm" id="achievementDesc">คุณมีความรู้ดีเยี่ยมในการป้องกันยาเสพติด</div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="space-y-4">
+                <button onclick="restartGame()" class="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105">
+                    🔄 เล่นอีกครั้ง
+                </button>
+                <button onclick="shareResults()" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105">
+                    📱 แชร์ผลลัพธ์
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer - Creator Information -->
+<footer class="bg-white/5 backdrop-blur-md border-t border-white/20 mt-12">
+    <div class="container mx-auto px-4 py-6">
+        <div class="text-center">
+            <div class="bg-white/10 rounded-2xl p-6 max-w-2xl mx-auto border border-white/20">
+                <div class="text-3xl mb-3">👨‍🏫</div>
+                <h3 class="text-xl font-bold text-white mb-2">ผู้สร้างเกม</h3>
+                <div class="text-white/90 font-medium mb-1">นายสิทธิพัฒน์ ภู่สีทอง</div>
+                <div class="text-white/80 text-sm mb-2">ครูผู้ช่วย</div>
+                <div class="text-white/70 text-sm mb-1">โรงเรียนอ่างทองพัฒนาฯ</div>
+                <div class="text-white/60 text-xs">สังกัดสำนักงานเขตพื้นที่การศึกษาประถมศึกษากำแพงเพชร เขต 1</div>
+                
+                <div class="mt-4 pt-4 border-t border-white/20">
+                    <div class="text-white/50 text-xs">
+                        🎯 สร้างขึ้นเพื่อการศึกษาและป้องกันยาเสพติดในเด็กและเยาวชน
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Game State
+    let currentQuestion = 0;
+    let score = 0;
+    let streak = 0;
+    let maxStreak = 0;
+    let answered = false;
+    let playerName = '';
+    let timeLeft = 30;
+    let timerInterval = null;
+    let questionStartTime = 0;
+    let gameStartTime = 0;
+    let shuffledQuestions = [];
+    let gameStats = [];
+
+    // Load leaderboard from localStorage
+    function getLeaderboard() {
+        const saved = localStorage.getItem('drugGameLeaderboard');
+        return saved ? JSON.parse(saved) : [];
+    }
+
+    // Save leaderboard to localStorage
+    function saveLeaderboard(leaderboard) {
+        localStorage.setItem('drugGameLeaderboard', JSON.stringify(leaderboard));
+    }
+
+    // Add score to leaderboard
+    function addToLeaderboard(name, score, percentage, playTime) {
+        const leaderboard = getLeaderboard();
+        const entry = {
+            name: name,
+            score: score,
+            percentage: percentage,
+            playTime: playTime,
+            date: new Date().toLocaleDateString('th-TH'),
+            timestamp: Date.now()
+        };
+        
+        leaderboard.push(entry);
+        leaderboard.sort((a, b) => b.score - a.score);
+        
+        // Keep only top 10
+        if (leaderboard.length > 10) {
+            leaderboard.splice(10);
+        }
+        
+        saveLeaderboard(leaderboard);
+        
+        // Add to game stats
+        addToGameStats(entry);
+    }
+
+    // Game stats functions
+    function getGameStats() {
+        const saved = localStorage.getItem('drugGameStats');
+        return saved ? JSON.parse(saved) : [];
+    }
+
+    function saveGameStats(stats) {
+        localStorage.setItem('drugGameStats', JSON.stringify(stats));
+    }
+
+    function addToGameStats(entry) {
+        const stats = getGameStats();
+        stats.push(entry);
+        
+        // Keep only last 50 games
+        if (stats.length > 50) {
+            stats.splice(0, stats.length - 50);
+        }
+        
+        saveGameStats(stats);
+    }
+
+    // Questions Database
+    const questions = [
+        {
+            emoji: "🚫",
+            question: "ยาเสพติดที่พบมากที่สุดในกลุ่มวัยรุ่นคือ?",
+            options: ["กัญชา", "ยาบ้า", "เฮโรอีน", "โคเคน"],
+            correct: 1,
+            explanation: "ยาบ้าเป็นยาเสพติดที่พบมากที่สุดในกลุ่มวัยรุ่นไทย เนื่องจากราคาถูกและหาได้ง่าย"
+        },
+        {
+            emoji: "🧠",
+            question: "ยาเสพติดส่งผลกระทบต่อสมองในด้านใดมากที่สุด?",
+            options: ["ความจำ", "การตัดสินใจ", "อารมณ์", "ทั้งหมดข้างต้น"],
+            correct: 3,
+            explanation: "ยาเสพติดส่งผลกระทบต่อสมองทุกด้าน ทำลายเซลล์สมองและระบบประสาทอย่างถาวร"
+        },
+        {
+            emoji: "👥",
+            question: "วิธีที่ดีที่สุดในการปฏิเสธยาเสพติดคือ?",
+            options: ["หนีออกจากที่นั่น", "บอกว่าไม่สนใจอย่างชัดเจน", "หาข้ออ้างต่างๆ", "เฉยๆ ไม่ตอบ"],
+            correct: 1,
+            explanation: "การปฏิเสธอย่างชัดเจนและมั่นใจเป็นวิธีที่ดีที่สุด แสดงให้เห็นถึงจุดยืนที่แน่วแน่"
+        },
+        {
+            emoji: "⚠️",
+            question: "อาการแรกที่เกิดขึ้นเมื่อเสพยาเสพติดคือ?",
+            options: ["ความสุขชั่วคราว", "ปวดหัว", "คลื่นไส้", "หลับไม่หลับ"],
+            correct: 0,
+            explanation: "ยาเสพติดจะให้ความรู้สึกสุขชั่วคราวก่อน แต่ตามมาด้วยผลเสียที่รุนแรงและยาวนาน"
+        },
+        {
+            emoji: "🏠",
+            question: "บทบาทของครอบครัวในการป้องกันยาเสพติดคือ?",
+            options: ["ควบคุมเข้มงวด", "สร้างความเข้าใจและความไว้วางใจ", "ปล่อยให้เด็กเลือกเอง", "ห้ามออกจากบ้าน"],
+            correct: 1,
+            explanation: "ครอบครัวที่อบอุ่น มีการสื่อสารที่ดี และสร้างความไว้วางใจ เป็นป้อมปราการที่แข็งแกร่งที่สุด"
+        },
+        {
+            emoji: "🎓",
+            question: "การศึกษาเกี่ยวกับยาเสพติดควรเริ่มตั้งแต่อายุเท่าไหร่?",
+            options: ["10-12 ปี", "13-15 ปี", "16-18 ปี", "เมื่อโตแล้ว"],
+            correct: 0,
+            explanation: "การให้ความรู้เกี่ยวกับยาเสพติดควรเริ่มตั้งแต่เด็ก เพื่อสร้างภูมิคุ้มกันทางสังคม"
+        },
+        {
+            emoji: "💪",
+            question: "กิจกรรมใดที่ช่วยป้องกันยาเสพติดได้ดีที่สุด?",
+            options: ["เล่นเกม", "กีฬาและศิลปะ", "ดูทีวี", "นอนหลับ"],
+            correct: 1,
+            explanation: "กิจกรรมกีฬาและศิลปะช่วยพัฒนาทักษะชีวิต สร้างความมั่นใจ และใช้เวลาว่างให้เป็นประโยชน์"
+        },
+        {
+            emoji: "🆘",
+            question: "เมื่อเพื่อนเสพยาเสพติด ควรทำอย่างไร?",
+            options: ["เฉยๆ ไม่ยุ่ง", "ช่วยเหลือและแจ้งผู้ใหญ่", "ตัดขาดความสัมพันธ์", "เสพไปด้วยกัน"],
+            correct: 1,
+            explanation: "การช่วยเหลือเพื่อนด้วยการแจ้งผู้ใหญ่ที่ไว้วางใจ เป็นการแสดงมิตรภาพที่แท้จริง"
+        },
+        {
+            emoji: "🌟",
+            question: "คุณค่าที่สำคัญที่สุดในการต่อต้านยาเสพติดคือ?",
+            options: ["ความกลัว", "ความรักตนเอง", "ความโกรธ", "ความเฉยเมย"],
+            correct: 1,
+            explanation: "ความรักและเห็นคุณค่าในตนเอง เป็นพลังใจที่แข็งแกร่งในการปฏิเสธสิ่งที่เป็นอันตราย"
+        },
+        {
+            emoji: "🌈",
+            question: "อนาคทที่สดใสปราศจากยาเสพติดต้องอาศัย?",
+            options: ["โชคชะตา", "ความตั้งใจและความรู้", "เงินทอง", "อำนาจ"],
+            correct: 1,
+            explanation: "อนาคตที่สดใสต้องสร้างด้วยความตั้งใจ ความรู้ และการเลือกทางที่ถูกต้อง"
+        }
+    ];
+
+    // Shuffle array function
+    function shuffleArray(array) {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    }
+
+    // Shuffle question options
+    function shuffleQuestionOptions(question) {
+        const correctAnswer = question.options[question.correct];
+        const shuffledOptions = shuffleArray(question.options);
+        const newCorrectIndex = shuffledOptions.indexOf(correctAnswer);
+        
+        return {
+            ...question,
+            options: shuffledOptions,
+            correct: newCorrectIndex
+        };
+    }
+
+    function startGame() {
+        // Get player name
+        const firstNameInput = document.getElementById('playerFirstName');
+        const lastNameInput = document.getElementById('playerLastName');
+        const firstName = firstNameInput.value.trim();
+        const lastName = lastNameInput.value.trim();
+        
+        if (!firstName || !lastName) {
+            alert('กรุณากรอกชื่อและนามสกุลให้ครบถ้วน');
+            if (!firstName) firstNameInput.focus();
+            else lastNameInput.focus();
+            return;
+        }
+        
+        playerName = `${firstName} ${lastName}`;
+        
+        // Shuffle questions and their options
+        shuffledQuestions = shuffleArray(questions).map(q => shuffleQuestionOptions(q));
+        
+        document.getElementById('startScreen').classList.add('hidden');
+        document.getElementById('gameScreen').classList.remove('hidden');
+        currentQuestion = 0;
+        score = 0;
+        streak = 0;
+        maxStreak = 0;
+        gameStartTime = Date.now();
+        showQuestion();
+    }
+
+    function showQuestion() {
+        answered = false;
+        const question = shuffledQuestions[currentQuestion];
+        
+        // Reset timer
+        timeLeft = 30;
+        questionStartTime = Date.now();
+        
+        // Update progress
+        document.getElementById('questionCounter').textContent = `${currentQuestion + 1}/10`;
+        document.getElementById('progressBar').style.width = `${((currentQuestion + 1) / 10) * 100}%`;
+        
+        // Update question
+        document.getElementById('questionEmoji').textContent = question.emoji;
+        document.getElementById('questionText').textContent = question.question;
+        
+        // Update score display
+        document.getElementById('score').textContent = score;
+        document.getElementById('streak').textContent = streak;
+        document.getElementById('timer').textContent = timeLeft;
+        
+        // Start timer
+        startTimer();
+        
+        // Create answer options
+        const optionsContainer = document.getElementById('answerOptions');
+        optionsContainer.innerHTML = '';
+        
+        question.options.forEach((option, index) => {
+            const button = document.createElement('button');
+            button.className = 'bg-white/10 hover:bg-white/20 border border-white/30 rounded-2xl p-4 text-white font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-lg';
+            button.textContent = option;
+            button.onclick = () => selectAnswer(index);
+            optionsContainer.appendChild(button);
+        });
+        
+        // Hide feedback and next button
+        document.getElementById('feedback').classList.add('hidden');
+        document.getElementById('nextButton').classList.add('hidden');
+    }
+
+    function startTimer() {
+        if (timerInterval) clearInterval(timerInterval);
+        
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            const timerElement = document.getElementById('timer');
+            timerElement.textContent = timeLeft;
+            
+            // Change color based on time left
+            if (timeLeft <= 5) {
+                timerElement.className = 'text-2xl font-bold text-red-400';
+            } else if (timeLeft <= 10) {
+                timerElement.className = 'text-2xl font-bold text-yellow-400';
+            } else {
+                timerElement.className = 'text-2xl font-bold text-orange-400';
+            }
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                if (!answered) {
+                    selectAnswer(-1); // Auto-select wrong answer when time runs out
+                }
+            }
+        }, 1000);
+    }
+
+    function selectAnswer(selectedIndex) {
+        if (answered) return;
+        answered = true;
+        
+        // Stop timer
+        clearInterval(timerInterval);
+        
+        const question = shuffledQuestions[currentQuestion];
+        const isCorrect = selectedIndex === question.correct && selectedIndex !== -1;
+        const buttons = document.querySelectorAll('#answerOptions button');
+        
+        let bonusPoints = 0;
+        let answerTime = 0;
+        
+        if (selectedIndex !== -1) {
+            answerTime = Math.round((Date.now() - questionStartTime) / 1000);
+        }
+        
+        // Calculate bonus points based on speed (only for correct answers)
+        if (isCorrect) {
+            if (answerTime <= 5) {
+                bonusPoints = 5; // Super fast bonus
+            } else if (answerTime <= 10) {
+                bonusPoints = 3; // Fast bonus
+            } else if (answerTime <= 15) {
+                bonusPoints = 1; // Quick bonus
+            }
+        }
+        
+        // Update score and streak
+        if (isCorrect) {
+            score += 10 + bonusPoints;
+            streak++;
+            maxStreak = Math.max(maxStreak, streak);
+        } else {
+            streak = 0;
+        }
+        
+        // Style buttons
+        buttons.forEach((button, index) => {
+            if (index === question.correct) {
+                button.classList.add('correct-answer');
+                button.classList.remove('bg-white/10', 'hover:bg-white/20');
+            } else if (index === selectedIndex && !isCorrect && selectedIndex !== -1) {
+                button.classList.add('wrong-answer');
+                button.classList.remove('bg-white/10', 'hover:bg-white/20');
+            } else {
+                button.style.opacity = '0.5';
+            }
+            button.onclick = null;
+        });
+        
+        // Show feedback
+        const feedback = document.getElementById('feedback');
+        const feedbackEmoji = document.getElementById('feedbackEmoji');
+        const feedbackTitle = document.getElementById('feedbackTitle');
+        const feedbackText = document.getElementById('feedbackText');
+        
+        if (selectedIndex === -1) {
+            // Time ran out
+            feedback.className = 'mt-6 p-4 rounded-2xl text-center bg-red-500/20 border border-red-400/30';
+            feedbackEmoji.textContent = '⏰';
+            feedbackTitle.textContent = 'หมดเวลา!';
+            feedbackTitle.className = 'font-bold text-lg mb-2 text-red-400';
+            feedbackText.textContent = question.explanation;
+        } else if (isCorrect) {
+            feedback.className = 'mt-6 p-4 rounded-2xl text-center bg-green-500/20 border border-green-400/30';
+            feedbackEmoji.textContent = '✅';
+            
+            let titleText = 'ถูกต้อง!';
+            if (bonusPoints > 0) {
+                titleText += ` (+${bonusPoints} โบนัส!)`;
+                if (bonusPoints === 5) feedbackEmoji.textContent = '🚀';
+                else if (bonusPoints === 3) feedbackEmoji.textContent = '⚡';
+                else if (bonusPoints === 1) feedbackEmoji.textContent = '💨';
+            }
+            
+            feedbackTitle.textContent = titleText;
+            feedbackTitle.className = 'font-bold text-lg mb-2 text-green-400';
+            feedbackText.textContent = question.explanation;
+        } else {
+            feedback.className = 'mt-6 p-4 rounded-2xl text-center bg-red-500/20 border border-red-400/30';
+            feedbackEmoji.textContent = '❌';
+            feedbackTitle.textContent = 'ไม่ถูกต้อง';
+            feedbackTitle.className = 'font-bold text-lg mb-2 text-red-400';
+            feedbackText.textContent = question.explanation;
+        }
+        
+        feedbackText.className = 'text-sm text-white/80';
+        feedback.classList.remove('hidden');
+        
+        // Show next button
+        document.getElementById('nextButton').classList.remove('hidden');
+        
+        // Update score display
+        document.getElementById('score').textContent = score;
+        document.getElementById('streak').textContent = streak;
+    }
+
+    function nextQuestion() {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+            showQuestion();
+        } else {
+            showResults();
+        }
+    }
+
+    function showResults() {
+        document.getElementById('gameScreen').classList.add('hidden');
+        document.getElementById('resultsScreen').classList.remove('hidden');
+        
+        const percentage = (score / (questions.length * 10)) * 100;
+        const gameEndTime = Date.now();
+        const playTime = Math.round((gameEndTime - gameStartTime) / 1000 / 60 * 10) / 10; // minutes with 1 decimal
+        
+        // Add to leaderboard
+        addToLeaderboard(playerName, score, percentage, playTime);
+        
+        // Set result emoji and title based on score
+        let resultEmoji, resultTitle, achievementEmoji, achievementTitle, achievementDesc;
+        
+        if (percentage >= 90) {
+            resultEmoji = '🏆';
+            resultTitle = 'ยอดเยี่ยม!';
+            achievementEmoji = '🌟';
+            achievementTitle = 'ผู้เชี่ยวชาญต่อต้านยาเสพติด';
+            achievementDesc = 'คุณมีความรู้ระดับเชี่ยวชาญและพร้อมเป็นแบบอย่างให้คนอื่น';
+        } else if (percentage >= 70) {
+            resultEmoji = '🎉';
+            resultTitle = 'ดีมาก!';
+            achievementEmoji = '💪';
+            achievementTitle = 'นักสู้ต่อต้านยาเสพติด';
+            achievementDesc = 'คุณมีความรู้ดีและสามารถปกป้องตนเองได้';
+        } else if (percentage >= 50) {
+            resultEmoji = '👍';
+            resultTitle = 'ดี!';
+            achievementEmoji = '📚';
+            achievementTitle = 'นักเรียนต่อต้านยาเสพติด';
+            achievementDesc = 'คุณมีพื้นฐานความรู้ที่ดี ควรศึกษาเพิ่มเติม';
+        } else {
+            resultEmoji = '💪';
+            resultTitle = 'ต้องพยายามต่อไป!';
+            achievementEmoji = '🌱';
+            achievementTitle = 'ผู้เริ่มต้นต่อต้านยาเสพติด';
+            achievementDesc = 'คุณควรศึกษาเพิ่มเติมเพื่อปกป้องตนเองให้ดีขึ้น';
+        }
+        
+        document.getElementById('resultEmoji').textContent = resultEmoji;
+        document.getElementById('resultTitle').textContent = resultTitle;
+        document.getElementById('resultMessage').textContent = `${playerName} ได้คะแนน ${score} จาก ${questions.length * 10} คะแนน (${percentage.toFixed(0)}%)`;
+        document.getElementById('finalScore').textContent = `${score}/${questions.length * 10}`;
+        document.getElementById('achievementEmoji').textContent = achievementEmoji;
+        document.getElementById('achievementTitle').textContent = achievementTitle;
+        document.getElementById('achievementDesc').textContent = achievementDesc;
+    }
+
+    function restartGame() {
+        document.getElementById('resultsScreen').classList.add('hidden');
+        document.getElementById('startScreen').classList.remove('hidden');
+    }
+
+    function showLeaderboard() {
+        document.getElementById('startScreen').classList.add('hidden');
+        document.getElementById('leaderboardScreen').classList.remove('hidden');
+        
+        const leaderboard = getLeaderboard();
+        const leaderboardList = document.getElementById('leaderboardList');
+        
+        if (leaderboard.length === 0) {
+            leaderboardList.innerHTML = `
+                <div class="bg-white/5 rounded-2xl p-6 border border-white/20">
+                    <div class="text-white/70">ยังไม่มีคะแนนในระบบ</div>
+                    <div class="text-white/50 text-sm mt-2">เล่นเกมเพื่อเป็นคนแรกในตารางคะแนน!</div>
+                </div>
+            `;
+        } else {
+            leaderboardList.innerHTML = leaderboard.map((entry, index) => {
+                let rankEmoji = '';
+                let rankClass = '';
+                
+                if (index === 0) {
+                    rankEmoji = '🥇';
+                    rankClass = 'bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border-yellow-400/30';
+                } else if (index === 1) {
+                    rankEmoji = '🥈';
+                    rankClass = 'bg-gradient-to-r from-gray-400/20 to-gray-500/20 border-gray-400/30';
+                } else if (index === 2) {
+                    rankEmoji = '🥉';
+                    rankClass = 'bg-gradient-to-r from-orange-600/20 to-yellow-600/20 border-orange-400/30';
+                } else {
+                    rankEmoji = `#${index + 1}`;
+                    rankClass = 'bg-white/5 border-white/20';
+                }
+                
+                return `
+                    <div class="${rankClass} rounded-2xl p-4 border">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="text-2xl font-bold text-white">${rankEmoji}</div>
+                                <div>
+                                    <div class="text-white font-medium">${entry.name}</div>
+                                    <div class="text-white/70 text-sm">${entry.date}</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xl font-bold text-white">${entry.score}</div>
+                                <div class="text-white/70 text-sm">${entry.percentage.toFixed(0)}% • ${entry.playTime || 0} นาที</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+    }
+
+    function backToStart() {
+        document.getElementById('leaderboardScreen').classList.add('hidden');
+        document.getElementById('statsScreen').classList.add('hidden');
+        document.getElementById('startScreen').classList.remove('hidden');
+    }
+
+    function showStats() {
+        document.getElementById('startScreen').classList.add('hidden');
+        document.getElementById('statsScreen').classList.remove('hidden');
+        
+        const stats = getGameStats();
+        const leaderboard = getLeaderboard();
+        
+        // Calculate overall statistics
+        const totalGames = stats.length;
+        const uniquePlayers = new Set(stats.map(s => s.name)).size;
+        const avgTime = totalGames > 0 ? 
+            Math.round(stats.reduce((sum, s) => sum + (s.playTime || 0), 0) / totalGames * 10) / 10 : 0;
+        
+        // Update stats display
+        document.getElementById('totalPlayers').textContent = uniquePlayers;
+        document.getElementById('totalGames').textContent = totalGames;
+        document.getElementById('avgTime').textContent = avgTime;
+        
+        // Show recent games (last 10)
+        const recentGames = stats.slice(-10).reverse();
+        const recentGamesList = document.getElementById('recentGamesList');
+        
+        if (recentGames.length === 0) {
+            recentGamesList.innerHTML = `
+                <div class="bg-white/5 rounded-xl p-4 border border-white/20">
+                    <div class="text-white/70">ยังไม่มีข้อมูลเกม</div>
+                </div>
+            `;
+        } else {
+            recentGamesList.innerHTML = recentGames.map((game, index) => {
+                const timeAgo = getTimeAgo(game.timestamp);
+                return `
+                    <div class="bg-white/5 rounded-xl p-4 border border-white/20">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="text-2xl">${index < 3 ? ['🥇', '🥈', '🥉'][index] : '🎮'}</div>
+                                <div class="text-left">
+                                    <div class="text-white font-medium">${game.name}</div>
+                                    <div class="text-white/70 text-sm">${timeAgo}</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-white font-bold">${game.score} คะแนน</div>
+                                <div class="text-white/70 text-sm">${game.playTime} นาที</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+    }
+
+    function getTimeAgo(timestamp) {
+        const now = Date.now();
+        const diff = now - timestamp;
+        const minutes = Math.floor(diff / 60000);
+        const hours = Math.floor(diff / 3600000);
+        const days = Math.floor(diff / 86400000);
+        
+        if (days > 0) return `${days} วันที่แล้ว`;
+        if (hours > 0) return `${hours} ชั่วโมงที่แล้ว`;
+        if (minutes > 0) return `${minutes} นาทีที่แล้ว`;
+        return 'เมื่อสักครู่';
+    }
+
+    function shareResults() {
+        const percentage = (score / (questions.length * 10)) * 100;
+        const leaderboard = getLeaderboard();
+        const playerRank = leaderboard.findIndex(entry => entry.name === playerName && entry.score === score) + 1;
+        
+        let text = `🛡️ ฉัน ${playerName} ได้คะแนน ${score}/${questions.length * 10} (${percentage.toFixed(0)}%) ในเกมต่อต้านยาเสพติด!`;
+        
+        if (playerRank > 0) {
+            text += ` อันดับที่ ${playerRank} ในตารางคะแนน!`;
+        }
+        
+        text += ` มาร่วมปกป้องอนาคตและสร้างสังคมที่ดีกว่ากันเถอะ! 💪✨`;
+        
+        if (navigator.share) {
+            navigator.share({
+                title: 'เกมต่อต้านยาเสพติด - ปกป้องอนาคต',
+                text: text
+            });
+        } else {
+            // Fallback for browsers that don't support Web Share API
+            navigator.clipboard.writeText(text).then(() => {
+                alert('คัดลอกผลลัพธ์แล้ว! นำไปแชร์ได้เลย');
+            });
+        }
+    }
+</script>
+  </body>
+</html>
